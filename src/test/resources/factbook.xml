@@ -1,0 +1,120 @@
+<att:attivio xmlns:att="http://www.attivio.com/configuration"
+	xmlns:f="http://www.attivio.com/configuration/features/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.attivio.com/configuration attivio-config.xsd                       
+ 					                 http://www.attivio.com/configuration/features/core http://www.attivio.com/configuration/features/coreFeatures.xsd 
+					                 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd ">
+	<!--Copyright 2014 Attivio Inc., All rights reserved -->
+
+	<components>
+		<!-- This component maps XML elements into AIE schema fields. It goes in 
+			an ingestion workflow between an XML File Connector and the beginning of 
+			the language analysis stages. -->
+		<component name="countryXPathExtractor"
+			class="com.attivio.platform.transformer.ingest.xml.ExtractXPaths">
+			<properties>
+				<!-- NAME is an AIE schema field. VALUE is an xPath to an XML element. 
+					@ denotes an element property rather than an element value. -->
+				<map name="xpaths">
+					<property name="title" value="/country/@name" />
+					<property name="country" value="/country/@name" />
+					<property name="thumbnailImageUri"
+						value="concat('/factbook_resources/flags/', /country/@abbrev, '-flag.gif')" />
+					<property name="previewImageUri"
+						value="concat('/factbook_resources/maps/', /country/@abbrev, '-map.gif')" />
+					<property name="uri" value="/country/@uri" />
+					<property name="teaser" value="/country/background" />
+					<property name="text" value="/country/background" />
+					<property name="economy" value="/country/economy/overview" />
+					<property name="location" value="/country/geography/locations/location" />
+					<property name="map" value="/country/geography/maps/location/map" />
+					<property name="climate"
+						value="/country/geography/climates/location/climate" />
+					<property name="terrain"
+						value="/country/geography/terrains/location/terrain" />
+					<property name="resource"
+						value="/country/geography/resources/location/resources/@name" />
+					<property name="spokenLanguage" value="/country/people/languages/language" />
+					<property name="religion" value="/country/people/religions/religion" />
+					<property name="ethnicity" value="/country/people/ethnicities/ethnicity" />
+					<property name="agriprod"
+						value="/country/economy/agriculturalProducts/product" />
+					<property name="industry" value="/country/economy/industries/industry" />
+					<property name="laborForce" value="/country/economy/@laborForce" />
+					<property name="inflationRate" value="/country/economy/@inflationRate" />
+					<property name="unemploymentRate" value="/country/economy/@unemploymentRate" />
+					<property name="publicDebt" value="/country/economy/@publicDebt" />
+					<property name="gdp.purchasePowerParity" value="/country/economy/gdp/@purchasePowerParity" />
+					<property name="gdp.officialExchangeRate"
+						value="/country/economy/gdp/@officialExchangeRate" />
+					<property name="gdp.growthRate" value="/country/economy/gdp/@growthRate" />
+					<property name="gdp.growthRatePerCapita" value="/country/economy/gdp/@growthRatePerCapita" />
+				</map>
+			</properties>
+		</component>
+	</components>
+
+	<connectors>
+		<connector name="cityConnector">
+			<scanner class="com.attivio.connector.CsvScanner">
+				<properties>
+					<property name="startDirectory"
+						value="${attivio.home}/conf/factbook/content/cities.csv" />
+					<property name="idFieldFormat" value="CITY-%s-%s" />
+					<property name="firstRowAreFieldNames" value="true" />
+					<list name="idFields">
+						<entry value="country" />
+						<entry value="title" />
+					</list>
+				</properties>
+			</scanner>
+			<feeder>
+				<properties>
+					<property name="ingestWorkflowName" value="ingest" />
+					<map name="staticFields">
+						<property name="table" value="city" />
+					</map>
+				</properties>
+			</feeder>
+		</connector>
+
+		<!-- This is the connector for reading country files. It is a FileScanner. 
+			It looks in the proper directory for XML files and then feeds the content 
+			to the countryXML workflow. -->
+		<connector name="countryConnector">
+			<scanner class="com.attivio.connector.FileScanner">
+				<properties>
+					<property name="startDirectory"
+						value="${attivio.home}/conf/factbook/content/countries" />
+					<list name="wildcardFilter">
+						<entry value="*.xml" />
+					</list>
+				</properties>
+			</scanner>
+			<feeder>
+				<properties>
+					<property name="ingestWorkflowName" value="countryXml" />
+					<map name="staticFields">
+						<property name="table" value="country" />
+					</map>
+				</properties>
+			</feeder>
+		</connector>
+	</connectors>
+
+
+	<workflows>
+		<!-- countryXml is the workflow for analyzing country XML files. It receives 
+			data from countryConnector, and passes it to three component stages, one 
+			of which is countryXPathExtractor. -->
+		<workflow name="countryXml" type="ingest">
+			<documentTransformer name="parseXml" />
+			<documentTransformer name="countryXPathExtractor" />
+			<documentTransformer name="dropDom" />
+			<subflow name="ingest" />
+		</workflow>
+	</workflows>
+
+</att:attivio>
