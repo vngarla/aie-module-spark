@@ -6,7 +6,11 @@
     <artifactId>aie-module-spark</artifactId>
     <name>platform/modules/spark</name>
     <version>0.0.1-SNAPSHOT</version>
-
+    <scm>
+        <connection>scm:git:https://github.com/vngarla/aie-module-spark.git</connection>
+        <developerConnection>scm:git:https://github.com/vngarla/aie-module-spark.git</developerConnection>
+        <url>https://github.com/vngarla/aie-module-spark</url>
+    </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aieVersion>4.2.0</aieVersion>
@@ -227,15 +231,38 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.3</version> <executions> <execution> <phase>validate</phase> <goals>
-                <goal>create</goal> </goals> </execution> </executions> <configuration> <doCheck>false</doCheck>
-                <doUpdate>false</doUpdate> <revisionOnScmFailure>unknown</revisionOnScmFailure>
-                <timestampFormat>{0,date,yyyy-MM-dd'T'HH:mm:ssZ}</timestampFormat> </configuration>
-                </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId>
-                <configuration> <archive> <manifestEntries> <SCM-Revision>${buildNumber}</SCM-Revision>
-                <Timestamp>${timestamp}</Timestamp> <SCM-Branch>${scmBranch}</SCM-Branch>
-                </manifestEntries> </archive> </configuration> </plugin> -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <revisionOnScmFailure>unknown</revisionOnScmFailure>
+                    <timestampFormat>{0,date,yyyy-MM-dd'T'HH:mm:ssZ}</timestampFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <SCM-Revision>${buildNumber}</SCM-Revision>
+                            <Timestamp>${timestamp}</Timestamp>
+                            <SCM-Branch>${scmBranch}</SCM-Branch>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -291,14 +318,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> <executions>
-                <execution> <id>copy-centerparcs-aie</id> <phase>package</phase> <configuration>
-                <echo>${project.build.directory}/${project.build.finalName}.jar</echo> <tasks>
-                <copy file="${project.build.directory}/${project.build.finalName}.jar" todir="${basedir}/lib"
-                overwrite="yes" /> <echo file="${project.build.directory}/version.txt"><![CDATA[
-                SCM-Revision ${buildNumber} Timestamp ${timestamp} SCM-Branch ${scmBranch}]]></echo>
-                </tasks> </configuration> <goals> <goal>run</goal> </goals> </execution>
-                </executions> </plugin> -->
         </plugins>
     </build>
 </project>
