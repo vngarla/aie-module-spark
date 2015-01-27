@@ -7,6 +7,7 @@ import com.attivio.model.document.{AttivioDocument, ResponseDocument}
 import com.attivio.model.query.phrase.TermRange
 import com.attivio.sdk.client.{DefaultAieClientFactory, ConnectorClient}
 import com.attivio.test.EsbTestUtils
+import org.apache.spark.sql.catalyst.expressions.Row
 import org.apache.spark.{SparkConf, SparkContext}
 import org.junit.Assert._
 import org.junit.{Assert, AfterClass, BeforeClass, Test}
@@ -27,6 +28,32 @@ class ResponseDocumentRDDTest extends Serializable {
     return new SparkContext(ResponseDocumentRDDTest.MASTER, "test", sparkConfig)
   }
 
+
+  @Test
+  def sqlTest(): Unit = {
+    val sc = getSparkContext()
+    val ac = AttivioScalaSparkUtil.getAttivioConfig(sc.getConf)
+    try {
+      val rdd = new ResponseDocumentRDD(sc, new QueryRequest("table:city"), Array[Query](new QueryString("longitude:[* TO 0}"), new QueryString("longitude:[0 TO *]")))
+      val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+      val citySqlRdd = AttivioScalaSparkUtil.docsToTable(rdd, sqlContext, ac, Array[(String, Boolean)]((".id", false),("title", false),("position", false),("location", true)), "city")
+      val results = sqlContext.sql("select * from city where title = 'Boston'")
+      val resultsLocal = results.collect()
+      results.map(t => "title: " + t(1) +"; location: " + t(4).asInstanceOf[Array[Any]].mkString(",")).collect().foreach(println)
+      Assert.assertEquals("expect 1 row", resultsLocal.size, 1)
+      Assert.assertTrue("id should be string", resultsLocal(0)(0).isInstanceOf[String])
+      Assert.assertTrue("title should be string", resultsLocal(0)(1).isInstanceOf[String])
+      Assert.assertTrue("point.x should be double", resultsLocal(0)(2).isInstanceOf[Double])
+      Assert.assertTrue("point.y should be double", resultsLocal(0)(3).isInstanceOf[Double])
+      Assert.assertTrue("location should be array", resultsLocal(0)(4).isInstanceOf[Array[Any]])
+      val resultsById = sqlContext.sql("select * from city where aie_doc_id = 'CITY-United States-Boston'")
+      Assert.assertEquals("expect 1 row", resultsById.count(), 1)
+
+    } finally {
+      sc.stop()
+    }
+
+  }
   @Test
   def wordCountTest(): Unit = {
 

@@ -2,20 +2,22 @@ package com.attivio.platform.modules.spark
 
 ;
 
+import com.attivio.model.query.{QueryString, Query}
+import com.attivio.model.schema.{Schema, SchemaField}
 import com.google.common.base.Strings
+import org.apache.spark.sql._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
 import scala.collection.JavaConversions._
 import com.attivio.messages.QueryRequest
-import com.attivio.messages.QueryRequest.FacetFinderMode
 import com.attivio.messages.StreamingQueryRequest
 import com.attivio.messages.StreamingQueryRequest.DocumentStreamingMode
 import com.attivio.model.document.{AttivioDocument, ResponseDocument}
 import com.attivio.sdk.client.{IngestClient, DefaultAieClientFactory, SearchClient}
 import scala.collection.mutable
 import scala.util.Random
-import org.apache.log4j.{LogManager, Logger}
-
+import org.apache.log4j.{LogManager}
+import org.apache.spark.sql.SQLContext
 
 
 object AttivioScalaSparkUtil {
@@ -138,6 +140,105 @@ object AttivioScalaSparkUtil {
       if (streamingResponse != null)
         streamingResponse.close()
     }
+  }
+
+  /**
+   * TODO handle dynamic fields
+   * @param schema
+   * @param fieldName
+   * @param multivalued
+   * @return
+   */
+  def fieldToSparkType(schema: Schema, fieldName: String, multivalued: Boolean):Array[StructField] = {
+    if(fieldName.equals(".id") || fieldName.equalsIgnoreCase("aie_doc_id"))
+      return Array[StructField](StructField("aie_doc_id", StringType, false))
+    val sf = schema.getField(fieldName)
+    require(sf != null)
+    val mv = (multivalued != null && multivalued) || (multivalued == null && sf.isMultiValue)
+    val t = sf.getType
+    // special handling for points
+    if(SchemaField.Type.POINT.equals(t)) {
+      if(mv) {
+        return Array[StructField](StructField(fieldName + "_x", ArrayType(DoubleType), true), StructField(fieldName + "_y", ArrayType(DoubleType), true))
+      } else {
+        return Array[StructField](StructField(fieldName + "_x", DoubleType, true), StructField(fieldName + "_y", DoubleType, true))
+      }
+    }
+    // handling for other types
+    val sparkType = t match {
+      case SchemaField.Type.BOOLEAN => BooleanType
+      case SchemaField.Type.DATE => DateType
+      case SchemaField.Type.DOUBLE => DoubleType
+      case SchemaField.Type.FLOAT => FloatType
+      case SchemaField.Type.INTEGER => IntegerType
+      case SchemaField.Type.LONG => LongType
+      // TODO why won't DecimalType work?
+      case SchemaField.Type.DECIMAL => DoubleType
+      case SchemaField.Type.MONEY => DoubleType
+      case _ =>  StringType
+    }
+    if(mv) {
+      return Array[StructField](StructField(fieldName, ArrayType(sparkType), true))
+    } else {
+      return Array[StructField](StructField(fieldName, sparkType, true))
+    }
+  }
+
+  /**
+   * create converters for the specified field.
+   * @param schema required - schema name
+   * @param fieldName required - field name
+   * @param multivalued optional - if true will extract an array type; else will extract a single value (the first)
+   * @return for all but points this will be a single-entry array.
+   */
+  def fieldToConverter(schema: Schema, fieldName: String, multivalued: Boolean):Array[FieldConverter] = {
+    if(fieldName.equals(".id") || fieldName.equalsIgnoreCase("aie_doc_id"))
+      return Array[FieldConverter](new IdFieldConverter())
+    val sf = schema.getField(fieldName)
+    require(sf != null)
+    val mv = (multivalued != null && multivalued) || (multivalued == null && sf.isMultiValue)
+    val t = sf.getType
+    if(SchemaField.Type.POINT.equals(t)) {
+      return Array[FieldConverter](new PointConverter(fieldName, mv, true), new PointConverter(fieldName, mv, false))
+    }
+    return Array[FieldConverter](new FieldConverter(fieldName, mv))
+  }
+
+  /**
+   * For the given list of fields, create a Spark SQL StructType for the table definition.
+   * Create an array of FieldConverters for converting attivio documents into records
+   * @param sc attivio parameters
+   * @param fields array of (field name, multivalued) tuples.
+   * @return tuple of StructType, array of FieldConverters
+   */
+  def fieldsToSchema(sc: java.util.Map[String, String], fields: Array[(String, Boolean)]): (StructType, DocToRowConverter) = {
+    val searchClient = AttivioScalaSparkUtil.createSearchClient(sc)
+    val schema = searchClient.getDefaultSchema
+    return (StructType(fields.flatMap(field => fieldToSparkType(schema, field._1, field._2))), new DocToRowConverter(fields.flatMap(field => fieldToConverter(schema, field._1, field._2))))
+  }
+
+  /**
+   * Main entry point to convert an RDD of ResponseDocuments into a spark sql table.
+   *
+   * The specified fields will be mapped to row values, in the specified order.  The type mapping is as you would expect, modulo Money/Decimal (couldn't get that to work, TODO).
+   *
+   * Points will be mapped as 2 doubles - [field name]_x and [field name]_y.
+   *
+   * The .id field will be mapped to aie_doc_id to simplify referring to this field in SQL.  Alternatively, specify the "aie_doc_id" as the field name (we will figure out that this means the .id field)
+   *
+   * @param docRDD response documents from an AIE query
+   * @param sqlContext sqlContext to add table to
+   * @param ac attivio parameters
+   * @param fields array of (fieldName, multivalued) tuples.  Often we do not explicitly specify a field as single valued in the schema.
+   * @param table the table to register the rdd under
+   * @return SchemaRDD of the converted results
+   */
+  def docsToTable(docRDD: RDD[ResponseDocument], sqlContext: SQLContext, ac: java.util.Map[String, String], fields: Array[(String, Boolean)], table: String): SchemaRDD = {
+    val schemaAndConverters = AttivioScalaSparkUtil.fieldsToSchema(ac, Array[(String, Boolean)]((".id", false),("title", false),("position", false),("location", true)))
+    val sqlRdd = docRDD.map(doc => schemaAndConverters._2.docToRow(doc))
+    val tableSqlRdd = sqlContext.applySchema(sqlRdd, schemaAndConverters._1)
+    tableSqlRdd.registerTempTable(table)
+    return tableSqlRdd
   }
 
 }
