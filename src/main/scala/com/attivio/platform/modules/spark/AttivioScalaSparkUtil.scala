@@ -19,43 +19,60 @@ import scala.util.Random
 import org.apache.log4j.{LogManager}
 import org.apache.spark.sql.SQLContext
 
-
+/**
+ * Miscellaneous utilities to simplify AIE usage from Spark.
+ *
+ * Many functions accept a Map of AIE configuration parameters.  The parameters are ass follows
+ * <ul>
+ * <li>attivio.searchers - required - comma separated list of [host]:[baseport] searchers.  Corresponds to searchers nodeset from aie topology.
+ * <li>attivio.processors - required for ingestion - comma separated list of [host]:[baseport] processors.  Corresponds to processors nodeset from aie topology.
+ * <li>attivio.usessl - optional - if true, use ssl
+ * <li>attivio.username - optional - use this AIE API username
+ * <li>attivio.password - optional - use this AIE API password
+ * </ul>
+ *
+ * Typically you would add these properties to the SparkConf object, or set these in the spark config.
+ */
 object AttivioScalaSparkUtil {
   val log = LogManager.getLogger(AttivioScalaSparkUtil.getClass)
+
+  /**
+   * Stream query results, create RDD.  Note that this loads the query results in the Driver program.  For large result sets use ResponseDocumentRDD.
+   * @param sc SparkContext
+   * @param query query (simple query language)
+   * @param fieldNames fields to retrieve
+   * @return RDD
+   */
   def searchRdd(sc: SparkContext, query: String, fieldNames: Array[String]): RDD[ResponseDocument] = {
     val qr = new QueryRequest(query)
     qr.setFields(fieldNames:_*)
     return sc.parallelize(streamDocuments(getAttivioConfig(sc.getConf), qr).toSeq)
   }
 
+  /**
+   * simple wrapper to set field values in scala.
+   * @param doc
+   * @param fieldName
+   * @param fieldValue
+   * @return
+   */
   def setDocumentField(doc: AttivioDocument, fieldName: String, fieldValue: Any):AttivioDocument = {
     doc.setField(fieldName, Array[Any](fieldValue):_*)
     return doc
   }
 
   /**
-   * create a search client. Parameterized by SparkConf properties:
-   * <ul>
-   * <li>attivio.searchers - required - comma separated list of [host]:[baseport] searchers
-   * <li>attivio.usessl - optional - if true, use ssl
-   * <li>attivio.username - optional - use this username
-   * <li>attivio.password - optional - use this password
-   * </ul>
-   * @param sc
-   * @return
+   * create a search client.
+
+   * @param sc see class doc above
+   * @return SearchClient
    */
   def createSearchClient(sc: java.util.Map[String, String]): SearchClient = {
     return getAieClient(sc, "attivio.searchers", (fac, host, port) => fac.createSearchClient(host, port))
   }
 
   /**
-   * create a search client. Parameterized by SparkConf properties:
-   * <ul>
-   * <li>attivio.processors - required - comma separated list of [host]:[baseport] searchers
-   * <li>attivio.usessl - optional - if true, use ssl
-   * <li>attivio.username - optional - use this username
-   * <li>attivio.password - optional - use this password
-   * </ul>
+   * create an ingest client.
    * @param sc
    * @return
    */
@@ -66,7 +83,7 @@ object AttivioScalaSparkUtil {
   /**
    * generic function to create an attivio sdk client using one of the addresses specified in key.
    *
-   * TODO: pick a
+   * TODO: when spark and AIE are co-located, pick the local AIE server
    *
    * @param sc
    * @param key
@@ -97,6 +114,11 @@ object AttivioScalaSparkUtil {
     return facFunc(fac, hostPortArray(0), hostPortArray(1).toInt)
   }
 
+  /**
+   * Get attivio config from sparkConf.  all keys that start with "attivio." will be extracted
+   * @param sc
+   * @return
+   */
   def getAttivioConfig(sc: SparkConf): java.util.Map[String, String] = {
     val map = new java.util.HashMap[String, String]
     sc.getAll.filter(p => p._1.startsWith("attivio.")).foreach(p => map.put(p._1, p._2))
@@ -104,7 +126,7 @@ object AttivioScalaSparkUtil {
   }
 
   /**
-   * run the query as a streaming query, do something with the results
+   * run the query as a streaming query, return results in Array
    *
    * @param sc attivio parameters
    * @param qr query request
@@ -143,18 +165,20 @@ object AttivioScalaSparkUtil {
   }
 
   /**
+   * Map AIE field to StructField for use in Schema.
+   *
    * TODO handle dynamic fields
-   * @param schema
-   * @param fieldName
-   * @param multivalued
-   * @return
+   *
+   * @param schema aie schema
+   * @param fieldName field name
+   * @param mv is the field multivalued?
+   * @return Most AIE fields are mapped to a single column (return a single element array).  Points are mapped to 2 columns (2 doubles - 2 element array).
    */
-  def fieldToSparkType(schema: Schema, fieldName: String, multivalued: Boolean):Array[StructField] = {
+  def fieldToSparkType(schema: Schema, fieldName: String, mv: Boolean):Array[StructField] = {
     if(fieldName.equals(".id") || fieldName.equalsIgnoreCase("aie_doc_id"))
       return Array[StructField](StructField("aie_doc_id", StringType, false))
     val sf = schema.getField(fieldName)
     require(sf != null)
-    val mv = (multivalued != null && multivalued) || (multivalued == null && sf.isMultiValue)
     val t = sf.getType
     // special handling for points
     if(SchemaField.Type.POINT.equals(t)) {
@@ -172,9 +196,8 @@ object AttivioScalaSparkUtil {
       case SchemaField.Type.FLOAT => FloatType
       case SchemaField.Type.INTEGER => IntegerType
       case SchemaField.Type.LONG => LongType
-      // TODO why won't DecimalType work?
-      case SchemaField.Type.DECIMAL => DoubleType
-      case SchemaField.Type.MONEY => DoubleType
+      case SchemaField.Type.DECIMAL => DecimalType()
+      case SchemaField.Type.MONEY => DecimalType()
       case _ =>  StringType
     }
     if(mv) {
@@ -186,17 +209,16 @@ object AttivioScalaSparkUtil {
 
   /**
    * create converters for the specified field.
-   * @param schema required - schema name
-   * @param fieldName required - field name
-   * @param multivalued optional - if true will extract an array type; else will extract a single value (the first)
+   * @param schema schema name
+   * @param fieldName field name
+   * @param mv if true will extract an array type; else will extract a single value (the first)
    * @return for all but points this will be a single-entry array.
    */
-  def fieldToConverter(schema: Schema, fieldName: String, multivalued: Boolean):Array[FieldConverter] = {
+  def fieldToConverter(schema: Schema, fieldName: String, mv: Boolean):Array[FieldConverter] = {
     if(fieldName.equals(".id") || fieldName.equalsIgnoreCase("aie_doc_id"))
       return Array[FieldConverter](new IdFieldConverter())
     val sf = schema.getField(fieldName)
     require(sf != null)
-    val mv = (multivalued != null && multivalued) || (multivalued == null && sf.isMultiValue)
     val t = sf.getType
     if(SchemaField.Type.POINT.equals(t)) {
       return Array[FieldConverter](new PointConverter(fieldName, mv, true), new PointConverter(fieldName, mv, false))
@@ -206,7 +228,7 @@ object AttivioScalaSparkUtil {
 
   /**
    * For the given list of fields, create a Spark SQL StructType for the table definition.
-   * Create an array of FieldConverters for converting attivio documents into records
+   * Create a DocToRowConverter for converting attivio documents into records
    * @param sc attivio parameters
    * @param fields array of (field name, multivalued) tuples.
    * @return tuple of StructType, array of FieldConverters
@@ -217,19 +239,14 @@ object AttivioScalaSparkUtil {
     return (StructType(fields.flatMap(field => fieldToSparkType(schema, field._1, field._2))), new DocToRowConverter(fields.flatMap(field => fieldToConverter(schema, field._1, field._2))))
   }
 
+
   /**
-   * Main entry point to convert an RDD of ResponseDocuments into a spark sql table.
-   *
-   * The specified fields will be mapped to row values, in the specified order.  The type mapping is as you would expect, modulo Money/Decimal (couldn't get that to work, TODO).
-   *
-   * Points will be mapped as 2 doubles - [field name]_x and [field name]_y.
-   *
-   * The .id field will be mapped to aie_doc_id to simplify referring to this field in SQL.  Alternatively, specify the "aie_doc_id" as the field name (we will figure out that this means the .id field)
+   * Accept parameters to map Multi-Valued fields as arrays
    *
    * @param docRDD response documents from an AIE query
    * @param sqlContext sqlContext to add table to
    * @param ac attivio parameters
-   * @param fields array of (fieldName, multivalued) tuples.  Often we do not explicitly specify a field as single valued in the schema.
+   * @param fields array of (fieldName, multivalued) tuples.  Often we do not explicitly specify a field as single valued in the AIE schema - we rely on user input to determine if a field is 'really' multivalued and if it should be represented as a spark sql array.
    * @param table the table to register the rdd under
    * @return SchemaRDD of the converted results
    */
@@ -241,4 +258,25 @@ object AttivioScalaSparkUtil {
     return tableSqlRdd
   }
 
+  /**
+   * Main entry point to convert an RDD of ResponseDocuments into a spark sql table.
+   *
+   * The specified fields will be mapped to row values, in the specified order.  The type mapping is as you would expect, modulo Money/Decimal (couldn't get that to work, TODO).
+   *
+   * Points will be mapped as 2 doubles - [field name]_x and [field name]_y.
+   *
+   * The .id field will be mapped to aie_doc_id to simplify referring to this field in SQL.  Alternatively, specify the "aie_doc_id" as the field name (we will figure out that this means the .id field)
+   *
+   * This method assumes all fields are single-valued; we get the first value of each field.  See other docsToTable for getting multi-valued fields as arrays.
+   *
+   * @param docRDD response documents from an AIE query
+   * @param sqlContext sqlContext to add table to
+   * @param ac attivio parameters
+   * @param fields array field names
+   * @param table the table to register the rdd under
+   * @return SchemaRDD of the converted results
+   */
+  def docsToTable(docRDD: RDD[ResponseDocument], sqlContext: SQLContext, ac: java.util.Map[String, String], fields: Array[String], table: String): SchemaRDD = {
+    return docsToTable(docRDD, sqlContext, ac, fields.map(f => (f, false)), table)
+  }
 }
