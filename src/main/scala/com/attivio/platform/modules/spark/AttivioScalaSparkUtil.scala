@@ -25,7 +25,7 @@ import org.apache.spark.sql.SQLContext
  * Many functions accept a Map of AIE configuration parameters.  The parameters are ass follows
  * <ul>
  * <li>spark.attivio.searchers - required - comma separated list of [host]:[baseport] searchers.  Corresponds to searchers nodeset from aie topology.
- * <li>spark.attivio.processors - required for ingestion - comma separated list of [host]:[baseport] processors.  Corresponds to processors nodeset from aie topology.
+ * <li>spark.attivio.indexers - required for ingestion - comma separated list of [host]:[baseport] indexers.  Corresponds to indexers nodeset from aie topology.
  * <li>spark.attivio.usessl - optional - if true, use ssl
  * <li>spark.attivio.username - optional - use this AIE API username
  * <li>spark.attivio.password - optional - use this AIE API password
@@ -38,7 +38,7 @@ object AttivioScalaSparkUtil {
 
   val ATTIVIO_PREFIX = "spark.attivio."
   val ATTIVIO_SEARCHERS = ATTIVIO_PREFIX + "searchers"
-  val ATTIVIO_PROCESSORS = ATTIVIO_PREFIX + "processors"
+  val ATTIVIO_INDEXERS = ATTIVIO_PREFIX + "indexers"
   val ATTIVIO_USESSL = ATTIVIO_PREFIX + "usessl"
   val ATTIVIO_USERNAME = ATTIVIO_PREFIX + "username"
   val ATTIVIO_PASSWORD = ATTIVIO_PREFIX + "password"
@@ -84,7 +84,7 @@ object AttivioScalaSparkUtil {
    * @return
    */
   def createIngestClient(sc: java.util.Map[String, String]): IngestClient = {
-    return getAieClient(sc, ATTIVIO_PROCESSORS, (fac, host, port) => fac.createIngestClient(host, port))
+    return getAieClient(sc, ATTIVIO_INDEXERS, (fac, host, port) => fac.createIngestClient(host, port))
   }
 
   /**

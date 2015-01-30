@@ -24,7 +24,7 @@ class ResponseDocumentRDDTest extends Serializable {
   def getSparkContext() : SparkContext =  {
     val sparkConfig = new SparkConf()
     sparkConfig.set(AttivioScalaSparkUtil.ATTIVIO_SEARCHERS, ResponseDocumentRDDTest.ATTIVIO_HOSTNAME + ":" + ResponseDocumentRDDTest.ATTIVIO_BASEPORT)
-    sparkConfig.set(AttivioScalaSparkUtil.ATTIVIO_PROCESSORS, ResponseDocumentRDDTest.ATTIVIO_HOSTNAME + ":" + ResponseDocumentRDDTest.ATTIVIO_BASEPORT)
+    sparkConfig.set(AttivioScalaSparkUtil.ATTIVIO_INDEXERS, ResponseDocumentRDDTest.ATTIVIO_HOSTNAME + ":" + ResponseDocumentRDDTest.ATTIVIO_BASEPORT)
     return new SparkContext(ResponseDocumentRDDTest.MASTER, "test", sparkConfig)
   }
 
