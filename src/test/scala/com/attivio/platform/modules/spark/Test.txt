@@ -1,0 +1,52 @@
+import com.attivio.platform.modules.spark.AttivioScalaSparkUtil
+
+val rdd = AttivioScalaSparkUtil.searchRdd(sc, "table:city", Array[String]("title", "text"))
+val docs = rdd.collect
+docs.length
+// 2587
+docs(0)
+// res5: com.attivio.model.document.ResponseDocument = :RESULT {{title:[Vadsoe] | text:[Finnmark]}}
+
+import com.attivio.platform.modules.spark.ResponseDocumentRDD
+import com.attivio.messages.QueryRequest
+import com.attivio.model.query._
+
+val rdd = new ResponseDocumentRDD(sc, new QueryRequest("table:city"), Array[Query](new QueryString("longitude:[* TO 0}"), new QueryString("longitude:[0 TO *]")))
+//rdd: com.attivio.platform.modules.spark.ResponseDocumentRDD = ResponseDocumentRDD[1] at RDD at ResponseDocumentRDD.scala:75
+
+val rddCounts = rdd.flatMap(rd => rd.getFirstValueAsString("text").split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+//rddCounts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[4] at reduceByKey at <console>:26
+
+import com.attivio.model.document.AttivioDocument
+import com.attivio.platform.modules.spark.AttivioScalaSparkUtil.setDocumentField
+def wordcountToDoc(wordcount : (String, Int)):AttivioDocument = {
+    val doc = new AttivioDocument("wordcount_"+wordcount._1);
+    setDocumentField(doc, "text", wordcount._1)
+    setDocumentField(doc, "count_i", wordcount._2)
+    setDocumentField(doc, "table", "wordcount")
+    return doc
+}
+val rddDocs = rddCounts.map(wordcountToDoc)
+//rddDocs: org.apache.spark.rdd.RDD[com.attivio.model.document.AttivioDocument] = MappedRDD[5] at map at <console>:32
+
+val ac = AttivioScalaSparkUtil.getAttivioConfig(sc.getConf)
+def ingestDocs(iter : Iterator[AttivioDocument]):Unit = {
+    val ingestClient = AttivioScalaSparkUtil.createIngestClient(ac)
+    ingestClient.feed(iter.toArray:_*)
+    ingestClient.disconnect
+}
+rddDocs.foreachPartition(ingestDocs)
+
+val ingestClient = AttivioScalaSparkUtil.createIngestClient(ac)
+ingestClient.commit
+ingestClient.waitForCompletion
+
+
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+val citySqlRdd = AttivioScalaSparkUtil.docsToTable(rdd, sqlContext, ac, Array[String](".id","title","position"), "city")
+//citySqlRdd: org.apache.spark.sql.SchemaRDD = SchemaRDD[12] at RDD at SchemaRDD.scala:108
+val results = sqlContext.sql("select * from city where title = 'Boston'")
+val resultsLocal = results.collect()
+resultsLocal.map(row => "id: " + row(0) +", title: " + row(1)).foreach(println)
+//id: CITY-United States-Boston, title: Boston
+
