@@ -1,0 +1,707 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>AttivioScalaSparkUtil - platform/modules/spark 0.0.1-SNAPSHOT API - com.attivio.platform.modules.spark.AttivioScalaSparkUtil</title>
+          <meta name="description" content="AttivioScalaSparkUtil - platform modules spark 0.0.1 - SNAPSHOT API - com.attivio.platform.modules.spark.AttivioScalaSparkUtil" />
+          <meta name="keywords" content="AttivioScalaSparkUtil platform modules spark 0.0.1 SNAPSHOT API com.attivio.platform.modules.spark.AttivioScalaSparkUtil" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../index.html';
+            var hash = 'com.attivio.platform.modules.spark.AttivioScalaSparkUtil$';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../../../lib/object_big.png" />
+        <p id="owner"><a href="../../../../package.html" class="extype" name="com">com</a>.<a href="../../../package.html" class="extype" name="com.attivio">attivio</a>.<a href="../../package.html" class="extype" name="com.attivio.platform">platform</a>.<a href="../package.html" class="extype" name="com.attivio.platform.modules">modules</a>.<a href="package.html" class="extype" name="com.attivio.platform.modules.spark">spark</a></p>
+        <h1>AttivioScalaSparkUtil</h1>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <span class="name">AttivioScalaSparkUtil</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Miscellaneous utilities to simplify AIE usage from Spark.</p><p>Many functions accept a Map of AIE configuration parameters.  The parameters are ass follows</p><ul><li>spark.attivio.searchers - required - comma separated list of [host]:[baseport] searchers.  Corresponds to searchers nodeset from aie topology.</li><li>spark.attivio.processors - required for ingestion - comma separated list of [host]:[baseport] processors.  Corresponds to processors nodeset from aie topology.</li><li>spark.attivio.usessl - optional - if true, use ssl</li><li>spark.attivio.username - optional - use this AIE API username</li><li>spark.attivio.password - optional - use this AIE API password</li></ul><p>Typically you would add these properties to the SparkConf object, or set these in the spark config.
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil"><span>AttivioScalaSparkUtil</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:AnyRef):Boolean"></a>
+      <a id="!=(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:AnyRef):Boolean"></a>
+      <a id="==(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#ATTIVIO_PASSWORD" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ATTIVIO_PASSWORD:String"></a>
+      <a id="ATTIVIO_PASSWORD:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ATTIVIO_PASSWORD</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#ATTIVIO_PREFIX" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ATTIVIO_PREFIX:String"></a>
+      <a id="ATTIVIO_PREFIX:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ATTIVIO_PREFIX</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#ATTIVIO_PROCESSORS" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ATTIVIO_PROCESSORS:String"></a>
+      <a id="ATTIVIO_PROCESSORS:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ATTIVIO_PROCESSORS</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#ATTIVIO_SEARCHERS" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ATTIVIO_SEARCHERS:String"></a>
+      <a id="ATTIVIO_SEARCHERS:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ATTIVIO_SEARCHERS</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#ATTIVIO_USERNAME" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ATTIVIO_USERNAME:String"></a>
+      <a id="ATTIVIO_USERNAME:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ATTIVIO_USERNAME</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#ATTIVIO_USESSL" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ATTIVIO_USESSL:String"></a>
+      <a id="ATTIVIO_USESSL:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ATTIVIO_USESSL</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#createIngestClient" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createIngestClient(sc:java.util.Map[String,String]):com.attivio.sdk.client.IngestClient"></a>
+      <a id="createIngestClient(Map[String,String]):IngestClient"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createIngestClient</span><span class="params">(<span name="sc">sc: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="com.attivio.sdk.client.IngestClient">IngestClient</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">create an ingest client.</p><div class="fullcomment"><div class="comment cmt"><p>create an ingest client.</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"></dd><dt>returns</dt><dd class="cmt"><p>
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#createSearchClient" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createSearchClient(sc:java.util.Map[String,String]):com.attivio.sdk.client.SearchClient"></a>
+      <a id="createSearchClient(Map[String,String]):SearchClient"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createSearchClient</span><span class="params">(<span name="sc">sc: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="com.attivio.sdk.client.SearchClient">SearchClient</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">create a search client.</p><div class="fullcomment"><div class="comment cmt"><p>create a search client.
+</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"><p>see class doc above</p></dd><dt>returns</dt><dd class="cmt"><p>SearchClient
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#docsToTable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="docsToTable(docRDD:org.apache.spark.rdd.RDD[com.attivio.model.document.ResponseDocument],sqlContext:org.apache.spark.sql.SQLContext,ac:java.util.Map[String,String],fields:Array[String],table:String):org.apache.spark.sql.SchemaRDD"></a>
+      <a id="docsToTable(RDD[ResponseDocument],SQLContext,Map[String,String],Array[String],String):SchemaRDD"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">docsToTable</span><span class="params">(<span name="docRDD">docRDD: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.attivio.model.document.ResponseDocument">ResponseDocument</span>]</span>, <span name="sqlContext">sqlContext: <span class="extype" name="org.apache.spark.sql.SQLContext">SQLContext</span></span>, <span name="ac">ac: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="fields">fields: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="table">table: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.SchemaRDD">SchemaRDD</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Main entry point to convert an RDD of ResponseDocuments into a spark sql table.</p><div class="fullcomment"><div class="comment cmt"><p>Main entry point to convert an RDD of ResponseDocuments into a spark sql table.</p><p>The specified fields will be mapped to row values, in the specified order.  The type mapping is as you would expect, modulo Money/Decimal (couldn't get that to work, TODO).</p><p>Points will be mapped as 2 doubles - [field name]_x and [field name]_y.</p><p>The .id field will be mapped to aie_doc_id to simplify referring to this field in SQL.  Alternatively, specify the &quot;aie_doc_id&quot; as the field name (we will figure out that this means the .id field)</p><p>This method assumes all fields are single-valued; we get the first value of each field.  See other docsToTable for getting multi-valued fields as arrays.
+</p></div><dl class="paramcmts block"><dt class="param">docRDD</dt><dd class="cmt"><p>response documents from an AIE query</p></dd><dt class="param">sqlContext</dt><dd class="cmt"><p>sqlContext to add table to</p></dd><dt class="param">ac</dt><dd class="cmt"><p>attivio parameters</p></dd><dt class="param">fields</dt><dd class="cmt"><p>array field names</p></dd><dt class="param">table</dt><dd class="cmt"><p>the table to register the rdd under</p></dd><dt>returns</dt><dd class="cmt"><p>SchemaRDD of the converted results
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#docsToTable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="docsToTable(docRDD:org.apache.spark.rdd.RDD[com.attivio.model.document.ResponseDocument],sqlContext:org.apache.spark.sql.SQLContext,ac:java.util.Map[String,String],fields:Array[(String,Boolean)],table:String):org.apache.spark.sql.SchemaRDD"></a>
+      <a id="docsToTable(RDD[ResponseDocument],SQLContext,Map[String,String],Array[(String,Boolean)],String):SchemaRDD"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">docsToTable</span><span class="params">(<span name="docRDD">docRDD: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.attivio.model.document.ResponseDocument">ResponseDocument</span>]</span>, <span name="sqlContext">sqlContext: <span class="extype" name="org.apache.spark.sql.SQLContext">SQLContext</span></span>, <span name="ac">ac: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="fields">fields: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Boolean">Boolean</span>)]</span>, <span name="table">table: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.SchemaRDD">SchemaRDD</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Accept parameters to map Multi-Valued fields as arrays
+</p><div class="fullcomment"><div class="comment cmt"><p>Accept parameters to map Multi-Valued fields as arrays
+</p></div><dl class="paramcmts block"><dt class="param">docRDD</dt><dd class="cmt"><p>response documents from an AIE query</p></dd><dt class="param">sqlContext</dt><dd class="cmt"><p>sqlContext to add table to</p></dd><dt class="param">ac</dt><dd class="cmt"><p>attivio parameters</p></dd><dt class="param">fields</dt><dd class="cmt"><p>array of (fieldName, multivalued) tuples.  Often we do not explicitly specify a field as single valued in the AIE schema - we rely on user input to determine if a field is 'really' multivalued and if it should be represented as a spark sql array.</p></dd><dt class="param">table</dt><dd class="cmt"><p>the table to register the rdd under</p></dd><dt>returns</dt><dd class="cmt"><p>SchemaRDD of the converted results
+</p></dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#fieldToConverter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldToConverter(schema:com.attivio.model.schema.Schema,fieldName:String,mv:Boolean):Array[com.attivio.platform.modules.spark.FieldConverter]"></a>
+      <a id="fieldToConverter(Schema,String,Boolean):Array[FieldConverter]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldToConverter</span><span class="params">(<span name="schema">schema: <span class="extype" name="com.attivio.model.schema.Schema">Schema</span></span>, <span name="fieldName">fieldName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="mv">mv: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<a href="FieldConverter.html" class="extype" name="com.attivio.platform.modules.spark.FieldConverter">FieldConverter</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">create converters for the specified field.</p><div class="fullcomment"><div class="comment cmt"><p>create converters for the specified field.</p></div><dl class="paramcmts block"><dt class="param">schema</dt><dd class="cmt"><p>schema name</p></dd><dt class="param">fieldName</dt><dd class="cmt"><p>field name</p></dd><dt class="param">mv</dt><dd class="cmt"><p>if true will extract an array type; else will extract a single value (the first)</p></dd><dt>returns</dt><dd class="cmt"><p>for all but points this will be a single-entry array.
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#fieldToSparkType" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldToSparkType(schema:com.attivio.model.schema.Schema,fieldName:String,mv:Boolean):Array[org.apache.spark.sql.StructField]"></a>
+      <a id="fieldToSparkType(Schema,String,Boolean):Array[StructField]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldToSparkType</span><span class="params">(<span name="schema">schema: <span class="extype" name="com.attivio.model.schema.Schema">Schema</span></span>, <span name="fieldName">fieldName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="mv">mv: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.apache.spark.sql.StructField">StructField</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Map AIE field to StructField for use in Schema.</p><div class="fullcomment"><div class="comment cmt"><p>Map AIE field to StructField for use in Schema.</p><p>TODO handle dynamic fields
+</p></div><dl class="paramcmts block"><dt class="param">schema</dt><dd class="cmt"><p>aie schema</p></dd><dt class="param">fieldName</dt><dd class="cmt"><p>field name</p></dd><dt class="param">mv</dt><dd class="cmt"><p>is the field multivalued?</p></dd><dt>returns</dt><dd class="cmt"><p>Most AIE fields are mapped to a single column (return a single element array).  Points are mapped to 2 columns (2 doubles - 2 element array).
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#fieldsToSchema" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fieldsToSchema(sc:java.util.Map[String,String],fields:Array[(String,Boolean)]):(org.apache.spark.sql.StructType,com.attivio.platform.modules.spark.DocToRowConverter)"></a>
+      <a id="fieldsToSchema(Map[String,String],Array[(String,Boolean)]):(StructType,DocToRowConverter)"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fieldsToSchema</span><span class="params">(<span name="sc">sc: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="fields">fields: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Boolean">Boolean</span>)]</span>)</span><span class="result">: (<span class="extype" name="org.apache.spark.sql.StructType">StructType</span>, <a href="DocToRowConverter.html" class="extype" name="com.attivio.platform.modules.spark.DocToRowConverter">DocToRowConverter</a>)</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">For the given list of fields, create a Spark SQL StructType for the table definition.</p><div class="fullcomment"><div class="comment cmt"><p>For the given list of fields, create a Spark SQL StructType for the table definition.
+Create a DocToRowConverter for converting attivio documents into records</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"><p>attivio parameters</p></dd><dt class="param">fields</dt><dd class="cmt"><p>array of (field name, multivalued) tuples.</p></dd><dt>returns</dt><dd class="cmt"><p>tuple of StructType, array of FieldConverters
+</p></dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#getAieClient" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getAieClient[T](sc:java.util.Map[String,String],key:String,facFunc:(com.attivio.sdk.client.DefaultAieClientFactory,String,Int)=&gt;T):T"></a>
+      <a id="getAieClient[T](Map[String,String],String,(DefaultAieClientFactory,String,Int)⇒T):T"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getAieClient</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="sc">sc: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="facFunc">facFunc: (<span class="extype" name="com.attivio.sdk.client.DefaultAieClientFactory">DefaultAieClientFactory</span>, <span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>) ⇒ <span class="extype" name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil.getAieClient.T">T</span></span>)</span><span class="result">: <span class="extype" name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil.getAieClient.T">T</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">generic function to create an attivio sdk client using one of the addresses specified in key.</p><div class="fullcomment"><div class="comment cmt"><p>generic function to create an attivio sdk client using one of the addresses specified in key.</p><p>TODO: when spark and AIE are co-located, pick the local AIE server
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"></dd><dt class="param">sc</dt><dd class="cmt"></dd><dt class="param">key</dt><dd class="cmt"></dd><dt class="param">facFunc</dt><dd class="cmt"></dd><dt>returns</dt><dd class="cmt"><p>
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#getAttivioConfig" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getAttivioConfig(sc:org.apache.spark.SparkConf):java.util.Map[String,String]"></a>
+      <a id="getAttivioConfig(SparkConf):Map[String,String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getAttivioConfig</span><span class="params">(<span name="sc">sc: <span class="extype" name="org.apache.spark.SparkConf">SparkConf</span></span>)</span><span class="result">: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Get attivio config from sparkConf.</p><div class="fullcomment"><div class="comment cmt"><p>Get attivio config from sparkConf.  all keys that start with &quot;attivio.&quot; will be extracted</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"></dd><dt>returns</dt><dd class="cmt"><p>
+</p></dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#log" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="log:org.apache.log4j.Logger"></a>
+      <a id="log:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">log</span><span class="result">: <span class="extype" name="org.apache.log4j.Logger">Logger</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#searchRdd" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="searchRdd(sc:org.apache.spark.SparkContext,query:String,fieldNames:Array[String]):org.apache.spark.rdd.RDD[com.attivio.model.document.ResponseDocument]"></a>
+      <a id="searchRdd(SparkContext,String,Array[String]):RDD[ResponseDocument]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">searchRdd</span><span class="params">(<span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>, <span name="query">query: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fieldNames">fieldNames: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.attivio.model.document.ResponseDocument">ResponseDocument</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Stream query results, create RDD.</p><div class="fullcomment"><div class="comment cmt"><p>Stream query results, create RDD.  Note that this loads the query results in the Driver program.  For large result sets use ResponseDocumentRDD.</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"><p>SparkContext</p></dd><dt class="param">query</dt><dd class="cmt"><p>query (simple query language)</p></dd><dt class="param">fieldNames</dt><dd class="cmt"><p>fields to retrieve</p></dd><dt>returns</dt><dd class="cmt"><p>RDD
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#setDocumentField" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDocumentField(doc:com.attivio.model.document.AttivioDocument,fieldName:String,fieldValue:Any):com.attivio.model.document.AttivioDocument"></a>
+      <a id="setDocumentField(AttivioDocument,String,Any):AttivioDocument"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDocumentField</span><span class="params">(<span name="doc">doc: <span class="extype" name="com.attivio.model.document.AttivioDocument">AttivioDocument</span></span>, <span name="fieldName">fieldName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fieldValue">fieldValue: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="com.attivio.model.document.AttivioDocument">AttivioDocument</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">simple wrapper to set field values in scala.</p><div class="fullcomment"><div class="comment cmt"><p>simple wrapper to set field values in scala.</p></div><dl class="paramcmts block"><dt class="param">doc</dt><dd class="cmt"></dd><dt class="param">fieldName</dt><dd class="cmt"></dd><dt class="param">fieldValue</dt><dd class="cmt"></dd><dt>returns</dt><dd class="cmt"><p>
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#streamDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="streamDocuments(sc:java.util.Map[String,String],qr:com.attivio.messages.QueryRequest,func:Iterator[com.attivio.model.document.ResponseDocument]=&gt;Unit):Unit"></a>
+      <a id="streamDocuments(Map[String,String],QueryRequest,(Iterator[ResponseDocument])⇒Unit):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">streamDocuments</span><span class="params">(<span name="sc">sc: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="qr">qr: <span class="extype" name="com.attivio.messages.QueryRequest">QueryRequest</span></span>, <span name="func">func: (<span class="extype" name="scala.Iterator">Iterator</span>[<span class="extype" name="com.attivio.model.document.ResponseDocument">ResponseDocument</span>]) ⇒ <span class="extype" name="scala.Unit">Unit</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">run the query as a streaming query, do something with the results
+</p><div class="fullcomment"><div class="comment cmt"><p>run the query as a streaming query, do something with the results
+</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"><p>attivio parameters</p></dd><dt class="param">qr</dt><dd class="cmt"><p>query request</p></dd><dt class="param">func</dt><dd class="cmt"><p>function to apply to iterator over response documents
+</p></dd></dl></div>
+    </li><li name="com.attivio.platform.modules.spark.AttivioScalaSparkUtil#streamDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="streamDocuments(sc:java.util.Map[String,String],qr:com.attivio.messages.QueryRequest):Array[com.attivio.model.document.ResponseDocument]"></a>
+      <a id="streamDocuments(Map[String,String],QueryRequest):Array[ResponseDocument]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">streamDocuments</span><span class="params">(<span name="sc">sc: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="qr">qr: <span class="extype" name="com.attivio.messages.QueryRequest">QueryRequest</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.attivio.model.document.ResponseDocument">ResponseDocument</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">run the query as a streaming query, return results in Array
+</p><div class="fullcomment"><div class="comment cmt"><p>run the query as a streaming query, return results in Array
+</p></div><dl class="paramcmts block"><dt class="param">sc</dt><dd class="cmt"><p>attivio parameters</p></dd><dt class="param">qr</dt><dd class="cmt"><p>query request
+</p></dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../lib/template.js"></script>
+    </body>
+      </html>
