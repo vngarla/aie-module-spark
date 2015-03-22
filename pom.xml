@@ -13,10 +13,10 @@
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <aieVersion>4.2.0</aieVersion>
+        <aieVersion>4.3.1</aieVersion>
         <finalName>aie-module-spark</finalName>
         <scala.version>2.10.4</scala.version>
-        <spark.version>1.2.0</spark.version>
+        <spark.version>1.3.0</spark.version>
         <attivio.host>localhost</attivio.host>
         <attivio.baseport>16000</attivio.baseport>
         <attivio.environment>test</attivio.environment>
@@ -218,10 +218,7 @@
         </resources>
         <testResources>
             <testResource>
-                <directory>src/main/test</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
+                <directory>src/test/resources</directory>
             </testResource>
         </testResources>
         <plugins>

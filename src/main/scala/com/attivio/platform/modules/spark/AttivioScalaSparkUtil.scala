@@ -1,23 +1,22 @@
 package com.attivio.platform.modules.spark
 
-;
 
-import com.attivio.model.query.{QueryString, Query}
-import com.attivio.model.schema.{Schema, SchemaField}
-import com.google.common.base.Strings
-import org.apache.spark.sql._
-import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.rdd.RDD
-import scala.collection.JavaConversions._
-import com.attivio.messages.QueryRequest
-import com.attivio.messages.StreamingQueryRequest
+import com.attivio.messages.{QueryRequest, StreamingQueryRequest}
 import com.attivio.messages.StreamingQueryRequest.DocumentStreamingMode
 import com.attivio.model.document.{AttivioDocument, ResponseDocument}
-import com.attivio.sdk.client.{IngestClient, DefaultAieClientFactory, SearchClient}
+import com.attivio.model.schema.{Schema, SchemaField}
+import com.attivio.sdk.client.{DefaultAieClientFactory, IngestClient, SearchClient}
+import com.google.common.base.Strings
+import org.apache.log4j.LogManager
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.{SQLContext, _}
+import org.apache.spark.sql.types._
+import org.apache.spark.{SparkConf, SparkContext}
+
+import scala.collection.JavaConversions._
 import scala.collection.mutable
 import scala.util.Random
-import org.apache.log4j.{LogManager}
-import org.apache.spark.sql.SQLContext
+
 
 /**
  * Miscellaneous utilities to simplify AIE usage from Spark.
